@@ -11,7 +11,7 @@ package com.yudi.bean;
  * @author YUDI
  * @date 2020/2/25
  */
-public class FileManagerUtil {
+public class FileOrder {
     /**
      * 数据文件保存路径
      */

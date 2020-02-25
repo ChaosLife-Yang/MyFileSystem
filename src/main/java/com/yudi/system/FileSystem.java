@@ -1,6 +1,6 @@
 package com.yudi.system;
 
-import com.yudi.bean.FileManagerUtil;
+import com.yudi.bean.FileOrder;
 
 import java.util.Scanner;
 
@@ -13,7 +13,7 @@ public class FileSystem {
     /**
      * 默认的当前目录为 /
      */
-    public static String currentPath = FileManagerUtil.ROOTPATH;
+    public static String currentPath = FileOrder.ROOTPATH;
 
     public static void run() {
         menu();
@@ -25,19 +25,19 @@ public class FileSystem {
             String[] ca = op.trim().split(" ");
             try {
                 switch (ca[0].trim()) {
-                    case FileManagerUtil.EDIT:
+                    case FileOrder.EDIT:
                         FileEdit.createFile(ca[1].trim(), currentPath);
                         break;
-                    case FileManagerUtil.MD:
+                    case FileOrder.MD:
                         FileEdit.createDir(ca[1].trim(), currentPath);
                         break;
-                    case FileManagerUtil.CD:
+                    case FileOrder.CD:
                         currentPath = FileEdit.cdFile(ca[1].trim(), currentPath);
                         break;
-                    case FileManagerUtil.DEL:
+                    case FileOrder.DEL:
                         FileEdit.delFile(ca[1].trim(), currentPath);
                         break;
-                    case FileManagerUtil.DIR:
+                    case FileOrder.DIR:
                         FileEdit.lookFileMsg(currentPath);
                         break;
                     case "cat":

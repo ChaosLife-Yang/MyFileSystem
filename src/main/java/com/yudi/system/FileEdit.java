@@ -1,7 +1,7 @@
 package com.yudi.system;
 
 
-import com.yudi.bean.FileManagerUtil;
+import com.yudi.bean.FileOrder;
 import com.yudi.bean.FileMsg;
 import com.yudi.bean.MyObjectOutputStream;
 
@@ -29,7 +29,7 @@ public class FileEdit {
      */
     public static boolean fileExist(String name, String currentPath) {
         try {
-            FileReader reader = new FileReader(FileManagerUtil.DATAPATH);
+            FileReader reader = new FileReader(FileOrder.DATAPATH);
             int len;
             String msg = "";
             //用数组读取 效率更快
@@ -46,7 +46,7 @@ public class FileEdit {
 
         ObjectInputStream ois;
         try {
-            ois = new ObjectInputStream(new FileInputStream(FileManagerUtil.DATAPATH));
+            ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
             FileMsg fileMsg;
             while (true) {
                 try {
@@ -94,7 +94,7 @@ public class FileEdit {
         System.out.println("请输入文件内容：");
         fileMsg.setContent(sc.nextLine());
         try {
-            MyObjectOutputStream moos = MyObjectOutputStream.getInstance(new File(FileManagerUtil.DATAPATH), true);
+            MyObjectOutputStream moos = MyObjectOutputStream.getInstance(new File(FileOrder.DATAPATH), true);
             moos.writeObject(fileMsg);
             System.out.println("创建成功");
             moos.close();
@@ -111,7 +111,7 @@ public class FileEdit {
      */
     public static void catFile(String name, String currentPath) {
         try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileManagerUtil.DATAPATH));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
             FileMsg fileMsg;
             while (true) {
                 try {
@@ -154,7 +154,7 @@ public class FileEdit {
         fileMsg.setType("dir");
         fileMsg.setDate(new Date());
         try {
-            MyObjectOutputStream moos = MyObjectOutputStream.getInstance(new File(FileManagerUtil.DATAPATH), true);
+            MyObjectOutputStream moos = MyObjectOutputStream.getInstance(new File(FileOrder.DATAPATH), true);
             moos.writeObject(fileMsg);
             System.out.println("创建成功");
             moos.close();
@@ -178,7 +178,7 @@ public class FileEdit {
         try {
             FileMsg fileMsg;
             List<FileMsg> list = new LinkedList<>();
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileManagerUtil.DATAPATH));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
             while (true) {
                 try {
                     //从数据文件中读取对象
@@ -190,7 +190,7 @@ public class FileEdit {
                     }
                     //捕获EOFException异常 捕获到就退出循环
                 } catch (EOFException e) {
-                    ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FileManagerUtil.DATAPATH));
+                    ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FileOrder.DATAPATH));
                     for (FileMsg f : list) {
                         oos.writeObject(f);
                     }
@@ -224,7 +224,7 @@ public class FileEdit {
             return currentPath;
         }
         try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileManagerUtil.DATAPATH));
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
             FileMsg fileMsg;
             while (true) {
                 try {
@@ -256,7 +256,7 @@ public class FileEdit {
      */
     public static void lookFileMsg(String currentPath) {
         try {
-            FileReader fileReader = new FileReader(FileManagerUtil.DATAPATH);
+            FileReader fileReader = new FileReader(FileOrder.DATAPATH);
             int len;
             String msg = "";
             //用数组读取 效率更快
@@ -267,7 +267,7 @@ public class FileEdit {
             //如果数据存放的文件里没有数据,则不读取对象
             if (!msg.equals("")) {
                 FileMsg fileMsg;
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileManagerUtil.DATAPATH));
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
                 while (true) {
                     try {
                         //从数据文件中读取对象

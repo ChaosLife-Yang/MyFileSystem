@@ -15,7 +15,7 @@ public class FileOrder {
     /**
      * 数据文件保存路径
      */
-//    public static final String DATAPATH = "E:\\IdeaProjects\\FileSystemTest\\data";
+//    public static final String DATAPATH = "E:\\JavaStudy\\FileSystem\\data";
     public static final String DATAPATH = "/usr/local/filedata/data";
     /**
      * 设置根目录为 /

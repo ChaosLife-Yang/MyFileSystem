@@ -29,6 +29,7 @@
 
     <build>
         <finalName>FileSystem-linux</finalName>
+        <!--<finalName>FileSystem-win</finalName>-->
         <plugins>
             <!-- 指定主方法生成可执行的jar包 -->
             <plugin>

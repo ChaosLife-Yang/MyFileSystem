@@ -82,7 +82,7 @@ public class FileEdit {
         }
         if (name.contains("/")) {
             String[] dir = name.split("/");
-            currentPath = currentPath + name.replace(dir[dir.length - 1], "");
+            currentPath = currentPath + name.substring(0, name.lastIndexOf(dir[dir.length - 1]));
             name = dir[dir.length - 1];
         }
         FileMsg fileMsg = new FileMsg();
@@ -145,7 +145,7 @@ public class FileEdit {
         }
         if (name.contains("/")) {
             String[] dir = name.split("/");
-            currentPath = currentPath + name.replace(dir[dir.length - 1], "");
+            currentPath = currentPath + name.substring(0, name.lastIndexOf(dir[dir.length - 1]));
             name = dir[dir.length - 1];
         }
         FileMsg fileMsg = new FileMsg();
@@ -215,12 +215,7 @@ public class FileEdit {
     public static String cdFile(String name, String currentPath) {
         if (name.equals("../")) {
             String[] path = currentPath.split("/");
-            for (String p : path) {
-                if (p.equals(path[path.length - 1])) {
-                    currentPath = currentPath.replace(path[path.length - 1] + "/", "");
-                    break;
-                }
-            }
+            currentPath = currentPath.substring(0, currentPath.lastIndexOf(path[path.length - 1]));
             return currentPath;
         }
         try {

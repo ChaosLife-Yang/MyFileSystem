@@ -29,7 +29,6 @@ public class FileMsg implements Serializable {
      * 文件内容
      */
     private String content;
-
     /**
      * 文件类型 文件或目录
      */

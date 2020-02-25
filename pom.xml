@@ -28,7 +28,7 @@
     </dependencies>
 
     <build>
-        <finalName>FileSystem</finalName>
+        <finalName>FileSystem-linux</finalName>
         <plugins>
             <!-- 指定主方法生成可执行的jar包 -->
             <plugin>

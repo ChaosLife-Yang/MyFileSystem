@@ -6,14 +6,14 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 
 /**
- * 重写了writeStreamHeader方法 容错率更高
+ * 重写了ObjectOutputStream类的writeStreamHeader方法
+ * 在断断续续的写入文件信息时不会报错
  */
 public class MyObjectOutputStream extends ObjectOutputStream {
 
     private static File f;
 
     private static boolean is_append;
-
 
     public MyObjectOutputStream(File file, boolean append) throws IOException {
         super(new FileOutputStream(file, append));
@@ -32,7 +32,6 @@ public class MyObjectOutputStream extends ObjectOutputStream {
             super.reset();     //否则，重置。
         }
     }
-
 
     /**
      * 不能通过构造函数实例化一个MyObjectOutputStream，否则会直接调用super(new FileOutputStream(file,append))，而父类这个方法包含了

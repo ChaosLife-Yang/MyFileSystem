@@ -38,8 +38,10 @@ public class FileEdit {
                 msg += new String(c, 0, len);
             }
             if (msg.equals("")) {
+                reader.close();
                 return false;
             }
+            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

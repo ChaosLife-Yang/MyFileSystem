@@ -146,16 +146,21 @@ public class FileEdit {
         try {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
             FileMsg fileMsg;
+            boolean flag = false;
             while (true) {
                 try {
                     //从数据文件中读取对象
                     fileMsg = (FileMsg) ois.readObject();
                     String absolutePath = fileMsg.getRealpath() + fileMsg.getFilename();
-                    if (absolutePath.equals(currentPath + name)) {
+                    if (absolutePath.equals(currentPath + name) && fileMsg.getType().equals("file")) {
                         System.out.println(fileMsg.getContent());
+                        flag = true;
                     }
                     //捕获EOFException异常 捕获到就退出循环
                 } catch (EOFException e) {
+                    if (!flag) {
+                        System.out.println("该文件为目录或不存在！");
+                    }
                     ois.close();
                     break;
                 }

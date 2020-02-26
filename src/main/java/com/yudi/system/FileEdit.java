@@ -7,10 +7,7 @@ import com.yudi.bean.MyObjectOutputStream;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 /**
  * 实现命令行对文件的操作类
@@ -19,6 +16,61 @@ import java.util.Scanner;
  * @date 2020/2/25
  */
 public class FileEdit {
+
+    public static boolean addObject(FileMsg fileMsg) {
+        try {
+            MyObjectOutputStream moos = MyObjectOutputStream.getInstance(new File(FileOrder.DATAPATH), true);
+            moos.writeObject(fileMsg);
+            moos.close();
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static Map<String, String> splitDir(String name, String currentPath) {
+        String[] dir = name.split("/");
+        currentPath = currentPath + name.substring(0, name.lastIndexOf(dir[dir.length - 1]));
+        name = dir[dir.length - 1];
+        Map<String, String> map = new HashMap<>(2);
+        map.put("name", name);
+        map.put("currentPath", currentPath);
+        return map;
+    }
+
+    public static boolean faDirExist(String currentPath) {
+        try {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
+            FileMsg fileMsg;
+            int flag = 0;
+            while (true) {
+                try {
+                    fileMsg = (FileMsg) ois.readObject();
+                    if (fileMsg.getType().equals("file")) {
+                        if (fileMsg.getRealpath().equals(currentPath)) {
+                            flag++;
+                        }
+                    }
+                    if (fileMsg.getType().equals("dir")) {
+                        if ((fileMsg.getRealpath() + fileMsg.getFilename() + "/").contains(currentPath)) {
+                            flag++;
+                        }
+                    }
+                } catch (EOFException e) {
+                    ois.close();
+                    break;
+                }
+            }
+
+            if (flag == 0) {
+                return false;
+            }
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
 
     /**
      * 判断要创建的文件是否存在
@@ -83,38 +135,12 @@ public class FileEdit {
             return;
         }
         if (name.contains("/")) {
-            String[] dir = name.split("/");
-            currentPath = currentPath + name.substring(0, name.lastIndexOf(dir[dir.length - 1]));
-            name = dir[dir.length - 1];
-            try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
-                FileMsg fileMsg;
-                int flag = 0;
-                while (true) {
-                    try {
-                        fileMsg = (FileMsg) ois.readObject();
-                        if (fileMsg.getType().equals("file")) {
-                            if (fileMsg.getRealpath().equals(currentPath)) {
-                                flag++;
-                            }
-                        }
-                        if (fileMsg.getType().equals("dir")) {
-                            if ((fileMsg.getRealpath() + fileMsg.getFilename() + "/").contains(currentPath)) {
-                                flag++;
-                            }
-                        }
-                    } catch (EOFException e) {
-                        ois.close();
-                        break;
-                    }
-                }
-
-                if (flag == 0) {
-                    System.out.println("父级目录不存在！");
-                    return;
-                }
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+            Map<String, String> map = splitDir(name, currentPath);
+            name = map.get("name");
+            currentPath = map.get("currentPath");
+            if (!faDirExist(currentPath)) {
+                System.out.println("父级目录不存在！");
+                return;
             }
         }
         FileMsg fileMsg = new FileMsg();
@@ -122,14 +148,13 @@ public class FileEdit {
         fileMsg.setRealpath(currentPath);
         fileMsg.setType("file");
         fileMsg.setDate(new Date());
-        Scanner sc = new Scanner(System.in);
-        System.out.println("请输入文件内容：");
-        fileMsg.setContent(sc.nextLine());
         try {
-            MyObjectOutputStream moos = MyObjectOutputStream.getInstance(new File(FileOrder.DATAPATH), true);
-            moos.writeObject(fileMsg);
-            System.out.println("创建成功");
-            moos.close();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+            System.out.println("请输入文件内容：");
+            fileMsg.setContent(reader.readLine());
+            if (addObject(fileMsg)) {
+                System.out.println("创建成功");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -181,39 +206,12 @@ public class FileEdit {
             return;
         }
         if (name.contains("/")) {
-            String[] dir = name.split("/");
-            currentPath = currentPath + name.substring(0, name.lastIndexOf(dir[dir.length - 1]));
-            name = dir[dir.length - 1];
-            try {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
-                FileMsg fileMsg;
-                List<FileMsg> list = new LinkedList<>();
-                int flag = 0;
-                while (true) {
-                    try {
-                        fileMsg = (FileMsg) ois.readObject();
-                        if (fileMsg.getType().equals("file")) {
-                            if (fileMsg.getRealpath().equals(currentPath)) {
-                                flag++;
-                            }
-                        }
-                        if (fileMsg.getType().equals("dir")) {
-                            if ((fileMsg.getRealpath() + fileMsg.getFilename() + "/").contains(currentPath)) {
-                                flag++;
-                            }
-                        }
-                    } catch (EOFException e) {
-                        ois.close();
-                        break;
-                    }
-                }
-
-                if (flag == 0) {
-                    System.out.println("父级目录不存在！");
-                    return;
-                }
-            } catch (IOException | ClassNotFoundException e) {
-                e.printStackTrace();
+            Map<String, String> map = splitDir(name, currentPath);
+            name = map.get("name");
+            currentPath = map.get("currentPath");
+            if (!faDirExist(currentPath)) {
+                System.out.println("父级目录不存在！");
+                return;
             }
         }
         FileMsg fileMsg = new FileMsg();
@@ -221,13 +219,8 @@ public class FileEdit {
         fileMsg.setRealpath(currentPath);
         fileMsg.setType("dir");
         fileMsg.setDate(new Date());
-        try {
-            MyObjectOutputStream moos = MyObjectOutputStream.getInstance(new File(FileOrder.DATAPATH), true);
-            moos.writeObject(fileMsg);
+        if (addObject(fileMsg)) {
             System.out.println("创建成功");
-            moos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

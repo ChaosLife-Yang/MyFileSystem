@@ -2,6 +2,9 @@ package com.yudi.system;
 
 import com.yudi.bean.FileOrder;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Scanner;
 
 /**
@@ -17,10 +20,16 @@ public class FileSystem {
 
     public static void run() {
         menu();
-        Scanner sc = new Scanner(System.in);
+        //控制台读取
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
         do {
             System.out.print(currentPath + ">:");
-            String op = sc.nextLine();
+            String op = null;
+            try {
+                op = reader.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             //以空格分隔字符串 从而判断输入的命令
             String[] ca = op.trim().split(" ");
             try {

@@ -87,29 +87,26 @@ public class FileEdit {
             try {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
                 FileMsg fileMsg;
-                List<FileMsg> list = new LinkedList<>();
+                int flag = 0;
                 while (true) {
                     try {
                         fileMsg = (FileMsg) ois.readObject();
-                        list.add(fileMsg);
+                        if (fileMsg.getType().equals("file")) {
+                            if (fileMsg.getRealpath().equals(currentPath)) {
+                                flag++;
+                            }
+                        }
+                        if (fileMsg.getType().equals("dir")) {
+                            if ((fileMsg.getRealpath() + fileMsg.getFilename() + "/").contains(currentPath)) {
+                                flag++;
+                            }
+                        }
                     } catch (EOFException e) {
                         ois.close();
                         break;
                     }
                 }
-                int flag = 0;
-                for (FileMsg f : list) {
-                    if (f.getType().equals("file")) {
-                        if (f.getRealpath().equals(currentPath)) {
-                            flag++;
-                        }
-                    }
-                    if (f.getType().equals("dir")) {
-                        if ((f.getRealpath() + f.getFilename() + "/").contains(currentPath)) {
-                            flag++;
-                        }
-                    }
-                }
+
                 if (flag == 0) {
                     System.out.println("父级目录不存在！");
                     return;
@@ -189,28 +186,26 @@ public class FileEdit {
                 ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
                 FileMsg fileMsg;
                 List<FileMsg> list = new LinkedList<>();
+                int flag = 0;
                 while (true) {
                     try {
                         fileMsg = (FileMsg) ois.readObject();
-                        list.add(fileMsg);
+                        if (fileMsg.getType().equals("file")) {
+                            if (fileMsg.getRealpath().equals(currentPath)) {
+                                flag++;
+                            }
+                        }
+                        if (fileMsg.getType().equals("dir")) {
+                            if ((fileMsg.getRealpath() + fileMsg.getFilename() + "/").contains(currentPath)) {
+                                flag++;
+                            }
+                        }
                     } catch (EOFException e) {
                         ois.close();
                         break;
                     }
                 }
-                int flag = 0;
-                for (FileMsg f : list) {
-                    if (f.getType().equals("file")) {
-                        if (f.getRealpath().equals(currentPath)) {
-                            flag++;
-                        }
-                    }
-                    if (f.getType().equals("dir")) {
-                        if ((f.getRealpath() + f.getFilename() + "/").contains(currentPath)) {
-                            flag++;
-                        }
-                    }
-                }
+
                 if (flag == 0) {
                     System.out.println("父级目录不存在！");
                     return;

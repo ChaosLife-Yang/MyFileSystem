@@ -29,7 +29,7 @@ public class test {
     @Test
     public void test2() {
         try {
-            FileReader fileReader = new FileReader("E:\\IdeaProjects\\FileSystemTest\\data");
+            FileReader fileReader = new FileReader("E:\\JavaStudy\\FileSystem\\data");
             int len;
             String msg = new String();
             //用数组读取 效率更快
@@ -39,7 +39,7 @@ public class test {
             }
 //            System.out.println(msg);
             if (!msg.equals("")) {
-                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("E:\\IdeaProjects\\FileSystemTest\\data"));
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream("E:\\JavaStudy\\FileSystem\\data"));
                 FileMsg fileMsg;
                 while (true) {
                     try {

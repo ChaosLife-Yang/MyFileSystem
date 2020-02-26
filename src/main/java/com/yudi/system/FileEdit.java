@@ -84,6 +84,39 @@ public class FileEdit {
             String[] dir = name.split("/");
             currentPath = currentPath + name.substring(0, name.lastIndexOf(dir[dir.length - 1]));
             name = dir[dir.length - 1];
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
+                FileMsg fileMsg;
+                List<FileMsg> list = new LinkedList<>();
+                while (true) {
+                    try {
+                        fileMsg = (FileMsg) ois.readObject();
+                        list.add(fileMsg);
+                    } catch (EOFException e) {
+                        ois.close();
+                        break;
+                    }
+                }
+                int flag = 0;
+                for (FileMsg f : list) {
+                    if (f.getType().equals("file")) {
+                        if (f.getRealpath().equals(currentPath)) {
+                            flag++;
+                        }
+                    }
+                    if (f.getType().equals("dir")) {
+                        if ((f.getRealpath() + f.getFilename() + "/").contains(currentPath)) {
+                            flag++;
+                        }
+                    }
+                }
+                if (flag == 0) {
+                    System.out.println("父级目录不存在！");
+                    return;
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         FileMsg fileMsg = new FileMsg();
         fileMsg.setFilename(name);
@@ -147,6 +180,39 @@ public class FileEdit {
             String[] dir = name.split("/");
             currentPath = currentPath + name.substring(0, name.lastIndexOf(dir[dir.length - 1]));
             name = dir[dir.length - 1];
+            try {
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
+                FileMsg fileMsg;
+                List<FileMsg> list = new LinkedList<>();
+                while (true) {
+                    try {
+                        fileMsg = (FileMsg) ois.readObject();
+                        list.add(fileMsg);
+                    } catch (EOFException e) {
+                        ois.close();
+                        break;
+                    }
+                }
+                int flag = 0;
+                for (FileMsg f : list) {
+                    if (f.getType().equals("file")) {
+                        if (f.getRealpath().equals(currentPath)) {
+                            flag++;
+                        }
+                    }
+                    if (f.getType().equals("dir")) {
+                        if ((f.getRealpath() + f.getFilename() + "/").contains(currentPath)) {
+                            flag++;
+                        }
+                    }
+                }
+                if (flag == 0) {
+                    System.out.println("父级目录不存在！");
+                    return;
+                }
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
         }
         FileMsg fileMsg = new FileMsg();
         fileMsg.setFilename(name);

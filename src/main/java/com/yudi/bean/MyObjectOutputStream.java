@@ -15,7 +15,7 @@ public class MyObjectOutputStream extends ObjectOutputStream {
 
     private static boolean is_append;
 
-    public MyObjectOutputStream(File file, boolean append) throws IOException {
+    private MyObjectOutputStream(File file, boolean append) throws IOException {
         super(new FileOutputStream(file, append));
     }
 
@@ -26,7 +26,7 @@ public class MyObjectOutputStream extends ObjectOutputStream {
     protected void writeStreamHeader() throws IOException {
 
         //添加前缀条件：文件不存在、文件内容为空、不追加（覆盖原内容）
-        if (!f.exists() || f.length() == 0 || is_append == false) {
+        if (!f.exists() || f.length() == 0 || !is_append) {
             super.writeStreamHeader();
         } else {
             super.reset();     //否则，重置。

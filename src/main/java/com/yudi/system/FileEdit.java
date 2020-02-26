@@ -340,7 +340,7 @@ public class FileEdit {
                         fileMsg = (FileMsg) ois.readObject();
                         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         if (fileMsg.getRealpath().equals(currentPath)) {
-                            System.out.println(String.format("%-5s%-20s%s", fileMsg.getType(), format.format(fileMsg.getDate()), fileMsg.getFilename()));
+                            System.out.println(String.format("%-8s%-24s%s", "<" + fileMsg.getType() + ">", format.format(fileMsg.getDate()), fileMsg.getFilename()));
                         }
                     } catch (EOFException e) {
                         //捕获EOFException异常 捕获到就退出循环

@@ -24,7 +24,7 @@ public class FileEdit {
             moos.close();
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("添加失败");
         }
         return false;
     }

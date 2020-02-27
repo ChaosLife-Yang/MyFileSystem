@@ -8,6 +8,9 @@ import java.io.ObjectOutputStream;
 /**
  * 重写了ObjectOutputStream类的writeStreamHeader方法
  * 在断断续续的写入文件信息时不会报错
+ *
+ * @author YUDI
+ * @date 2020/2/25
  */
 public class MyObjectOutputStream extends ObjectOutputStream {
 

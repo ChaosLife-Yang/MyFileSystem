@@ -17,6 +17,9 @@ public class FileSystem {
      */
     public static String currentPath = FileOrder.ROOTPATH;
 
+    /**
+     * 通过调用其他方法将整个项目跑起来
+     */
     public static void run() {
         //程序一起动就会显示命令的菜单
         menu();

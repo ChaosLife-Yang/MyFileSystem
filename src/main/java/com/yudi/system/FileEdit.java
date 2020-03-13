@@ -209,12 +209,15 @@ public class FileEdit {
      * @param currentPath 当前目录
      */
     public static void catFile(String name, String currentPath) {
+        //先判断文件是否存在
+        if (!fileExist(name, currentPath)) {
+            System.out.println("该文件不存在！");
+            return;
+        }
         try {
             //读取data文件
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(FileOrder.DATAPATH));
             FileMsg fileMsg;
-            //定义一个标记变量用于判断该文件是否存在
-            boolean flag = false;
             while (true) {
                 try {
                     //从数data文件中读取对象信息
@@ -223,8 +226,6 @@ public class FileEdit {
                     // 如果该文本文件存在且文件类型为文本文件就将该文本文件的内容打印出来
                     if (absolutePath.equals(currentPath + name) && "file".equals(fileMsg.getType())) {
                         System.out.println(fileMsg.getContent());
-                        //将标记改为true
-                        flag = true;
                         //判断 如果该文件存在且文件类型为目录文件，则打印无法读取的信息并跳出循环
                     } else if (absolutePath.equals(currentPath + name) && "dir".equals(fileMsg.getType())) {
                         System.out.println("该文件为目录文件，无法读取内容！");
@@ -233,10 +234,6 @@ public class FileEdit {
                     }
                     //捕获EOFException异常 捕获到就意味着data文件读取完毕 可以退出循环了
                 } catch (EOFException e) {
-                    //如果读取完了data文件标记仍然为false则表示该文本文件不存在或为目录
-                    if (!flag) {
-                        System.out.println("该文件不存在！");
-                    }
                     ois.close();
                     break;
                 }

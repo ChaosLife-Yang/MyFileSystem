@@ -28,8 +28,8 @@
     </dependencies>
 
     <build>
-        <finalName>FileSystem-linux</finalName>
-        <!--<finalName>FileSystem-win</finalName>-->
+        <!--<finalName>FileSystem-linux</finalName>-->
+        <finalName>FileSystem-win</finalName>
         <plugins>
             <!-- 指定主方法生成可执行的jar包 -->
             <plugin>
@@ -37,6 +37,7 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <configuration>
                     <archive>
+                        <!--指明主方法的路径-->
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <mainClass>com.yudi.system.Main</mainClass>

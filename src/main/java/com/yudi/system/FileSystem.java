@@ -22,6 +22,7 @@ public class FileSystem {
         menu();
         //控制台读取
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        //使用一个do while 死循环让系统持续运作
         do {
             //打印出当前目录
             System.out.print(currentPath + ">:");
@@ -84,6 +85,9 @@ public class FileSystem {
         } while (true);
     }
 
+    /**
+     * 命令菜单
+     */
     public static void menu() {
         System.out.println("==================================================");
         System.out.println(" 改变目录：cd <目录名>\n" +

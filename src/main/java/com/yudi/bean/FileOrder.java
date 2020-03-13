@@ -14,6 +14,10 @@ package com.yudi.bean;
 public class FileOrder {
     /**
      * 数据文件保存路径
+     * 两个绝对
+     * windows绝对路径用于在windows上测试
+     * 编写完成后打包运行时将windows绝对路径注释掉
+     * 使用linux的绝对路径
      */
     public static final String DATAPATH = "E:\\JavaStudy\\FileSystem\\data";
 //    public static final String DATAPATH = "/usr/local/filedata/data";
@@ -29,6 +33,7 @@ public class FileOrder {
     public static final String DEL = "del";
     public static final String DIR = "dir";
     public static final String MD = "md";
-
-
+    public static final String CAT = "cat";
+    public static final String HELP = "help";
+    public static final String EXIT = "exit";
 }

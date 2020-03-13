@@ -27,7 +27,6 @@ public class MyObjectOutputStream extends ObjectOutputStream {
      */
     @Override
     protected void writeStreamHeader() throws IOException {
-
         //添加前缀条件：文件不存在、文件内容为空、不追加（覆盖原内容）
         if (!f.exists() || f.length() == 0 || !is_append) {
             super.writeStreamHeader();
@@ -37,8 +36,10 @@ public class MyObjectOutputStream extends ObjectOutputStream {
     }
 
     /**
-     * 不能通过构造函数实例化一个MyObjectOutputStream，否则会直接调用super(new FileOutputStream(file,append))，而父类这个方法包含了
-     * super.writeStreamHeader()方法，也就直接在要写的对象前加上了前缀，所以可以通过这个方法得到一个实例，绕过了那个判定，然后在进行判定是否在这个写对象是增加前缀
+     * 不能通过构造函数实例化一个MyObjectOutputStream，否则会直接调用super(new FileOutputStream(file,append))，
+     * 而父类这个方法包含了super.writeStreamHeader()方法，
+     * 也就直接在要写的对象前加上了前缀，
+     * 所以可以通过这个方法得到一个实例，绕过了那个判定，然后在进行判定是否在这个写对象是增加前缀
      */
     public static MyObjectOutputStream getInstance(File file, boolean append) {
         f = file;

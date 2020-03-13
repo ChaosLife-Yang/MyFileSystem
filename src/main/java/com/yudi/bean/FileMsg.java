@@ -6,7 +6,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 文件详情实体类
+ * 文件信息详情实体类
  *
  * @author YUDI
  * @date 2020/2/25
@@ -33,6 +33,4 @@ public class FileMsg implements Serializable {
      * 文件类型 文件或目录
      */
     private String type;
-
-
 }
